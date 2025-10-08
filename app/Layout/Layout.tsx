@@ -4,7 +4,7 @@ import UserIcon from "../(CSR(Components))/UserIcon";
 import CartIcon from "../(CSR(Components))/CartIcon";
 import HeartIcon from "../(CSR(Components))/HeartIcon";
 import Link from "next/link";
-import { Facebook, Instagram, Twitter } from "iconoir-react";
+import { Facebook, Instagram, Whatsapp } from "iconoir-react";
 
 interface MyComponentProps {
     children: any;
@@ -14,8 +14,8 @@ export default function Layout({ children }: MyComponentProps) {
     return (
         <>
             {/* Navbar */}
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 50 }}>
-                <Box sx={{ mt: 4, mb: 4 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'start', gap: 50 }}>
+                <Box sx={{ mt:4, pl:4 }}>
                     <TextField sx={{ width: 400 }}>
                         Buscar
                     </TextField>
@@ -24,7 +24,7 @@ export default function Layout({ children }: MyComponentProps) {
                 <Box sx={{ mt: 3, mb: 3 }}>
                     <Image
                         className="d"
-                        src="/LogoPagina.webp"
+                        src="/IconLogo.webp"
                         alt="logo de la pagina"
                         width={300}
                         height={70}
@@ -71,12 +71,13 @@ export default function Layout({ children }: MyComponentProps) {
                 {/* Contenido principal */}
                 <Stack
                     direction={{ xs: 'column', sm: 'row' }}
-                    spacing={{ xs: 3, sm: 5 }}
+                    spacing={{ xs: 3, sm: 5, xl:20 }}
                     justifyContent="space-between"
                     alignItems="flex-start"
                 >
                     {/* Sección info (logo a la izquierda) */}
                     <Box sx={{ flex: 1, minWidth: { xs: '100%', sm: 250 } }}>
+
                         <Image
                             src="/LogoPagina.webp"
                             alt="logo de la pagina"
@@ -84,35 +85,42 @@ export default function Layout({ children }: MyComponentProps) {
                             height={70}
                             priority
                         />
-                        <Typography variant="body2" sx={{ mt: 1 }}>
+
+                        <Typography variant="body1" sx={{ mt: 1 }}>
                             En Chipe Libros te acercamos a nuevas historias: literatura, filosofía, historia y mucho más.
                             Envíos a todo Chile, compra segura, rápida y sin complicaciones.
                         </Typography>
 
-                        <Box sx={{display:'flex', mt:3, gap:1}}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Box sx={{ display: 'flex', mt: 4, gap: 3 }}>
+                            <Avatar alt="icono Facebook" sx={{ width: 60, height: 60 }}>
+                                <Facebook color="black" height={30} width={30} />
+                            </Avatar>
+                            <Avatar alt="Icono Instagram" sx={{ width: 60, height: 60 }}>
+                                <Instagram color="black" height={30} width={30} />
+                            </Avatar>
+                            <Avatar alt="Icono Whatsapp" sx={{ width: 60, height: 60 }}>
+                                <Whatsapp color="black" height={30} width={30} />
+                            </Avatar>
                         </Box>
 
                     </Box>
 
                     {/* Sección enlaces (centro) */}
-                    <Box sx={{ flex: 1, textAlign: 'center' }}>
+                    <Box sx={{ flex: 1, pl:23}}>
                         <Typography variant="h5" gutterBottom>
                             Términos y Condiciones
                         </Typography>
-                        <Typography variant="body2">Política de privacidad</Typography>
-                        <Typography variant="body2">Devoluciones y cambios</Typography>
-                        <Typography variant="body2">Preguntas frecuentes</Typography>
+                        <Typography variant="body1">Política de privacidad</Typography>
+                        <Typography variant="body1">Devoluciones y cambios</Typography>
+                        <Typography variant="body1">Preguntas frecuentes</Typography>
                     </Box>
 
                     {/* Sección redes / más info (derecha) */}
-                    <Box sx={{ flex: 1 }}>
+                    <Box sx={{ flex: 1}}>
                         <Typography variant="h5" gutterBottom>
                             Más información
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="body1">
                             Atendemos de lunes a sábado. ¿Tienes dudas? <br />
                             ¡Escríbenos por WhatsApp o en nuestras redes sociales!
                         </Typography>

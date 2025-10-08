@@ -1,0 +1,17 @@
+{
+    "carousel": {
+        "fotoPortada": "/carrousel/Alibro2.webp",
+        "foto1": "/carrousel/alibro6.webp",
+        "foto2": "/carrousel/alibto.webp"
+    },
+    "categorias": {
+        "Imagen1": "/categorias/Fiodor1.webp",
+        "Imagen2": "/categorias/Nietzsche1.webp",
+        "Imagen3": "/categorias/roberto1.webp",
+        "Imagen4": "/categorias/historia1.webp",
+        "Descripcion1": "Literatura Rusa",
+        "Descripcion2": "Filosofía",
+        "Descripcion3": "Literatura Chilena",
+        "Descripcion4": "Historia"
+    }
+}
