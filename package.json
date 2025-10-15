@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.4",
     "@mui/material-nextjs": "^7.3.3",
+    "@mui/x-data-grid": "^8.14.0",
     "iconoir": "^7.11.0",
     "iconoir-react": "^7.11.0",
     "next": "15.5.4",

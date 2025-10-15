@@ -1,3 +1,5 @@
+'use client'
+
 import { Avatar, Box, Divider, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
 import UserIcon from "../(CSR(Components))/UserIcon";
@@ -5,17 +7,27 @@ import CartIcon from "../(CSR(Components))/CartIcon";
 import HeartIcon from "../(CSR(Components))/HeartIcon";
 import Link from "next/link";
 import { Facebook, Instagram, Whatsapp } from "iconoir-react";
+import React, { useState } from "react";
+import Categorianav from "../(CSR(Components))/(categoriaNav)/Categorianav";
 
 interface MyComponentProps {
     children: any;
 }
 
 export default function Layout({ children }: MyComponentProps) {
+    const [navCategoriasisOpen, setnavCategoriasisOpen] = useState<boolean>(false);
+
+    const handleClicknavcatagorias = () => {
+        setnavCategoriasisOpen(prev => !prev);
+    };
+
+
+
     return (
         <>
             {/* Navbar */}
             <Box sx={{ display: 'flex', justifyContent: 'start', gap: 50 }}>
-                <Box sx={{ mt:4, pl:4 }}>
+                <Box sx={{ mt: 4, pl: 4 }}>
                     <TextField sx={{ width: 400 }}>
                         Buscar
                     </TextField>
@@ -48,12 +60,14 @@ export default function Layout({ children }: MyComponentProps) {
             <Box sx={{ border: 40, borderColor: '#322F2F' }}>
                 <Box sx={{ backgroundColor: '#322F2F', display: 'flex', gap: 4, justifyContent: 'center' }}>
                     <Link href={"/"}>INICIO</Link>
-                    <Link href={"/pages/categorias"}>CATEGORIAS</Link>
+                    <Box onClick={handleClicknavcatagorias} sx={{ cursor: 'pointer', color: '#fff' }}>CATEGORIAS</Box> {/* como saco esto de aqui */}
                     <Link href={"/destacados"}>DESTACADOS</Link>
-                    <Link href={"/destacados"}>PACKS</Link>
-                    <Link href={"/destacados"}>CONTACTO</Link>
+                    <Link href={"/buscar-pedido"}>BUSCAR PEDIDO</Link>
                 </Box>
             </Box>
+
+            <Categorianav isOpen={navCategoriasisOpen} /> {/*pasar open */}
+
 
             {children}
 
@@ -71,7 +85,7 @@ export default function Layout({ children }: MyComponentProps) {
                 {/* Contenido principal */}
                 <Stack
                     direction={{ xs: 'column', sm: 'row' }}
-                    spacing={{ xs: 3, sm: 5, xl:20 }}
+                    spacing={{ xs: 3, sm: 5, xl: 20 }}
                     justifyContent="space-between"
                     alignItems="flex-start"
                 >
@@ -106,7 +120,7 @@ export default function Layout({ children }: MyComponentProps) {
                     </Box>
 
                     {/* Sección enlaces (centro) */}
-                    <Box sx={{ flex: 1, pl:23}}>
+                    <Box sx={{ flex: 1, pl: 23 }}>
                         <Typography variant="h5" gutterBottom>
                             Términos y Condiciones
                         </Typography>
@@ -116,7 +130,7 @@ export default function Layout({ children }: MyComponentProps) {
                     </Box>
 
                     {/* Sección redes / más info (derecha) */}
-                    <Box sx={{ flex: 1}}>
+                    <Box sx={{ flex: 1 }}>
                         <Typography variant="h5" gutterBottom>
                             Más información
                         </Typography>
