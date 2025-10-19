@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Whatsapp } from "iconoir-react";
 import React, { useState } from "react";
 import Categorianav from "../(CSR(Components))/(categoriaNav)/Categorianav";
+import { useRouter } from "next/navigation";
 
 interface MyComponentProps {
     children: any;
@@ -16,10 +17,15 @@ interface MyComponentProps {
 
 export default function Layout({ children }: MyComponentProps) {
     const [navCategoriasisOpen, setnavCategoriasisOpen] = useState<boolean>(false);
+    const router = useRouter();
 
     const handleClicknavcatagorias = () => {
         setnavCategoriasisOpen(prev => !prev);
     };
+
+    const handleClicknavAcceso = () => {
+        router.push("/login")
+    }
 
 
 
@@ -28,9 +34,7 @@ export default function Layout({ children }: MyComponentProps) {
             {/* Navbar */}
             <Box sx={{ display: 'flex', justifyContent: 'start', gap: 50 }}>
                 <Box sx={{ mt: 4, pl: 4 }}>
-                    <TextField sx={{ width: 400 }}>
-                        Buscar
-                    </TextField>
+
                 </Box>
 
                 <Box sx={{ mt: 3, mb: 3 }}>
@@ -46,12 +50,16 @@ export default function Layout({ children }: MyComponentProps) {
                 </Box>
 
                 <Box sx={{ display: 'flex', mt: 5, mb: 4, gap: 4 }}>
-                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 1 }}>
+
+
+                    {/* Modificar para que sea funcionable */}
+                    <Box onClick={handleClicknavAcceso} sx={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 1 , cursor: 'pointer', color: '#fff' }}>
                         <Typography variant="body1" sx={{ color: '#000000', mt: 2 }}>
                             Acceso
                         </Typography>
                         <UserIcon />
                     </Box>
+
                     <CartIcon />
                     <HeartIcon />
                 </Box>

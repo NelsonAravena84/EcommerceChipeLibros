@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import GoogleProvider from "./(providers)/GoogleProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {/* Aqui se recomienda establecer las rutas */}
         <AppRouterCacheProvider>
-        {children}
+        <GoogleProvider>{children}</GoogleProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
