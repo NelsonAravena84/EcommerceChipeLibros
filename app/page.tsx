@@ -80,16 +80,7 @@ export default function Home() {
 
           <Box sx={{ display: "flex", justifyContent: "center", gap: 8, mt: 9 }}>
             <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-          </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "center", gap: 8, mt: 9 }}>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
           </Box>
 
           <Box
@@ -117,7 +108,7 @@ export default function Home() {
             <CuadroTexto titulo={'Libros nuevos y usados'} descripcion='En ChipeLibro encontrarás tanto libros nuevos como de segunda mano. 
             Los ejemplares que no se venden son donados para seguir fomentando la lectura en distintas comunidades.' icono={<Image
                 className="d"
-                src="/iconrecycle.png"
+                src="/Recycling_symbol.svg"
                 alt="logo de la pagina"
                 width={65}
                 height={65}
