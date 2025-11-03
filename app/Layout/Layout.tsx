@@ -38,13 +38,13 @@ export default function Layout({ children }: MyComponentProps) {
   const [drawerCarritoisOpen, setdrawerCarritoisOpen] = useState(false);
   const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
   const [categoriasOpen, setCategoriasOpen] = useState(false);
+  const [categoriesDrawerOpen, setCategoriesDrawerOpen] = useState(false);
 
   const router = useRouter();
   const { cart } = useCart();
 
   const isMobile = useMediaQuery('(max-width:767px)');
 
-  // --- Categorías desplegable en escritorio ---
   const handleCategoriasClick = () => {
     setCategoriasOpen((prev) => !prev);
   };
@@ -53,7 +53,6 @@ export default function Layout({ children }: MyComponentProps) {
     setCategoriasOpen(false);
   };
 
-  // --- Acciones mobile ---
   const handleClicknavAcceso = () => {
     router.push('/login');
   };
@@ -62,10 +61,12 @@ export default function Layout({ children }: MyComponentProps) {
     setdrawerCarritoisOpen(true);
   };
 
+  // toggle para el drawer de menú (hamburguesa). Protege Tab/Shift
   const toggleMenuDrawer = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
+    event?: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
+      event &&
       event.type === 'keydown' &&
       ((event as React.KeyboardEvent).key === 'Tab' ||
         (event as React.KeyboardEvent).key === 'Shift')
@@ -73,13 +74,23 @@ export default function Layout({ children }: MyComponentProps) {
       return;
     }
     setMenuDrawerOpen(open);
+    setCategoriesDrawerOpen(false);
   };
 
+  // Menú principal del drawer (mobile)
   const menuItems = [
     { label: 'INICIO', href: '/' },
-    { label: 'CATEGORÍAS' },
+    { label: 'CATEGORÍAS' }, // manejará submenu
     { label: 'DESTACADOS', href: '/destacados' },
     { label: 'BUSCAR PEDIDO', href: '/buscar-pedido' },
+  ];
+
+  const categories = [
+    { label: 'Literatura', href: '/categoria/literatura' },
+    { label: 'Historia', href: '/categoria/historia' },
+    { label: 'Infantil', href: '/categoria/infantil' },
+    { label: 'Misterio', href: '/categoria/misterio' },
+    { label: 'Filosofía', href: '/categoria/filosofia' },
   ];
 
   return (
@@ -122,6 +133,7 @@ export default function Layout({ children }: MyComponentProps) {
                 }}
               />
             </Box>
+
             <Box sx={{ pr: 12 }}>
               <Image
                 src="/IconLogo.webp"
@@ -131,6 +143,7 @@ export default function Layout({ children }: MyComponentProps) {
                 priority
               />
             </Box>
+
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               <Box
                 onClick={handleClicknavAcceso}
@@ -145,12 +158,14 @@ export default function Layout({ children }: MyComponentProps) {
                 </Typography>
                 <UserIcon color="black" width={40} height={40} />
               </Box>
-              <Box onClick={handleClickDrawerOpen} sx={{ cursor: 'pointer' }}>
+
+              {/* Ícono del carrito - Desktop (DrawerCarrito está afuera) */}
+              <Box sx={{ cursor: 'pointer' }} onClick={handleClickDrawerOpen}>
                 <Badge badgeContent={cart.length} color="error" invisible={cart.length === 0}>
                   <CartIcon color="black" width={40} height={40} />
                 </Badge>
-                <DrawerCarrito isOpen={drawerCarritoisOpen} onClose={() => setdrawerCarritoisOpen(false)} />
               </Box>
+
               <HeartIcon />
             </Box>
           </Box>
@@ -179,46 +194,100 @@ export default function Layout({ children }: MyComponentProps) {
                 priority
               />
             </Box>
+
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <Tooltip title="Buscar">
                 <IconButton aria-label="search" sx={{ color: 'white' }}>
                   <Search width={24} height={24} color="white" />
                 </IconButton>
               </Tooltip>
+
               <Box onClick={handleClicknavAcceso} sx={{ cursor: 'pointer', color: 'white' }} aria-label="Acceso">
                 <UserIcon color="white" width={35} height={35} />
               </Box>
+
+              {/* Ícono del carrito - Mobile (DrawerCarrito está afuera) */}
               <Box onClick={handleClickDrawerOpen} sx={{ position: 'relative', cursor: 'pointer', color: 'white' }} aria-label="Carrito">
                 <Badge badgeContent={cart.length} color="error" invisible={cart.length === 0} overlap="circular">
                   <CartIcon color="white" width={35} height={35} />
                 </Badge>
-                <DrawerCarrito isOpen={drawerCarritoisOpen} onClose={() => setdrawerCarritoisOpen(false)} />
               </Box>
+
               <IconButton aria-label="menu" onClick={toggleMenuDrawer(true)} sx={{ color: 'white' }} size="large">
                 <MenuIcon />
               </IconButton>
-              <Drawer anchor="right" open={menuDrawerOpen} onClose={toggleMenuDrawer(false)}>
+
+              {/* Drawer para mobile (menú principal) */}
+              <Drawer
+                anchor="right"
+                open={menuDrawerOpen}
+                onClose={toggleMenuDrawer(false)}
+                PaperProps={{
+                  sx: {
+                    width: '100vw',
+                    maxWidth: '60vw',
+                    bgcolor: "#322F2F",
+                    color: "white"
+                  }
+                }}
+              >
                 <Box
-                  sx={{ width: 250, bgcolor: "#322F2F", color: "white" }}
+                  sx={{ height: "100vh", display: "flex", flexDirection: "column" }}
                   role="presentation"
-                  onClick={toggleMenuDrawer(false)}
                   onKeyDown={toggleMenuDrawer(false)}
                 >
                   <List>
                     {menuItems.map((item, index) => (
-                      <ListItem
-                        button
-                        key={index}
-                        component={item.href ? Link : 'div'}
-                        href={item.href ?? undefined}
-                        sx={{
-                          color: "white",
-                          fontWeight: 'bold',
-                          borderBottom: '1px solid #444'
-                        }}
-                      >
-                        <ListItemText primary={item.label} />
-                      </ListItem>
+                      <React.Fragment key={index}>
+                        {item.label === 'CATEGORÍAS' ? (
+                          <>
+                            <ListItem
+                              button
+                              onClick={() => setCategoriesDrawerOpen(o => !o)}
+                              sx={{
+                                color: "white",
+                                fontWeight: 'bold',
+                                borderBottom: '1px solid #444'
+                              }}
+                            >
+                              <ListItemText primary="CATEGORÍAS" />
+                            </ListItem>
+                            {categoriesDrawerOpen && (
+                              <Box sx={{ bgcolor: "#232324" }}>
+                                {categories.map((cat, i) => (
+                                  <ListItem
+                                    button
+                                    key={i}
+                                    component={Link}
+                                    href={cat.href}
+                                    sx={{
+                                      pl: 4,
+                                      color: "#f5f5f5",
+                                      fontSize: "1rem",
+                                      borderBottom: '1px solid #333'
+                                    }}
+                                  >
+                                    <ListItemText primary={cat.label} />
+                                  </ListItem>
+                                ))}
+                              </Box>
+                            )}
+                          </>
+                        ) : (
+                          <ListItem
+                            button
+                            component={item.href ? Link : 'div'}
+                            href={item.href ?? undefined}
+                            sx={{
+                              color: "white",
+                              fontWeight: 'bold',
+                              borderBottom: '1px solid #444'
+                            }}
+                          >
+                            <ListItemText primary={item.label} />
+                          </ListItem>
+                        )}
+                      </React.Fragment>
                     ))}
                   </List>
                 </Box>
@@ -245,18 +314,16 @@ export default function Layout({ children }: MyComponentProps) {
               <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>
                 INICIO
               </Link>
-              {/* Botón de Categorías con menú centralizado */}
               <Box
                 sx={{ cursor: 'pointer', color: 'white', position: 'relative', fontWeight: 600 }}
                 onClick={handleCategoriasClick}
               >
                 CATEGORÍAS
-                {/* Menú desplegable centralizado y ancho completo */}
                 {categoriasOpen && (
                   <Box
                     sx={{
                       position: 'fixed',
-                      top: '120px', // ajusta a la altura real de tu navbar
+                      top: '120px',
                       left: 0,
                       width: '100vw',
                       zIndex: 1400,
@@ -290,7 +357,7 @@ export default function Layout({ children }: MyComponentProps) {
         {children}
       </Box>
 
-      {/* Footer */}
+      {/* Footer (compacto) */}
       <Box
         component="footer"
         sx={{
@@ -299,62 +366,62 @@ export default function Layout({ children }: MyComponentProps) {
           mt: 6,
           py: 2,
           px: { xs: 1, sm: 3, md: 6 },
-          fontSize: { xs: '0.75rem', sm: '0.8rem', md: '0.9rem' }, // Font más pequeña
+          fontSize: { xs: '0.7rem', sm: '0.75rem', md: '0.8rem' },
         }}
       >
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
-          spacing={{ xs: 2, sm: 4, xl: 16 }}
+          spacing={{ xs: 1.5, sm: 3, xl: 12 }}
           justifyContent="space-between"
           alignItems={{ xs: 'flex-start', sm: 'center' }}
         >
-          <Box sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 }, mb: { xs: 2, sm: 0 } }}>
+          <Box sx={{ flex: 1, minWidth: { xs: '100%', sm: 180 }, mb: { xs: 1.5, sm: 0 } }}>
             <Image
               src="/LogoPagina.webp"
               alt="logo de la pagina"
               width={280}
-              height={65} // Tamaño un poco menor
+              height={80}
               priority
             />
-            <Typography variant="body2" sx={{ mt: 1 }}>
+            <Typography variant="body2" sx={{ mt: 1, fontSize: '0.85rem' }}>
               En Chipe Libros te acercamos a nuevas historias: literatura, filosofía, historia y mucho más. Envíos a todo Chile, compra segura, rápida y sin complicaciones.
             </Typography>
-            <Box sx={{ display: 'flex', mt: 3, gap: 2 }}>
-              <Avatar alt="Facebook" sx={{ width: 40, height: 40 }}>
-                <Facebook color="black" height={22} width={22} />
+            <Box sx={{ display: 'flex', mt: 2, gap: 1.5 }}>
+              <Avatar alt="Facebook" sx={{ width: 34, height: 34 }}>
+                <Facebook color="black" height={18} width={18} />
               </Avatar>
-              <Avatar alt="Instagram" sx={{ width: 40, height: 40 }}>
-                <Instagram color="black" height={22} width={22} />
+              <Avatar alt="Instagram" sx={{ width: 34, height: 34 }}>
+                <Instagram color="black" height={18} width={18} />
               </Avatar>
-              <Avatar alt="Whatsapp" sx={{ width: 40, height: 40 }}>
-                <Whatsapp color="black" height={22} width={22} />
+              <Avatar alt="Whatsapp" sx={{ width: 34, height: 34 }}>
+                <Whatsapp color="black" height={18} width={18} />
               </Avatar>
             </Box>
           </Box>
 
-          <Box sx={{ flex: 1, pl: { sm: 4 }, mb: { xs: 2, sm: 0 } }}>
+          <Box sx={{ flex: 1, pl: { sm: 3 }, mb: { xs: 1.5, sm: 0 } }}>
             <Typography variant="h6" gutterBottom sx={{ fontSize: '1rem' }}>
               Términos y Condiciones
             </Typography>
-            <Typography variant="body2">Política de privacidad</Typography>
-            <Typography variant="body2">Devoluciones y cambios</Typography>
-            <Typography variant="body2">Preguntas frecuentes</Typography>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>Política de privacidad</Typography>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>Devoluciones y cambios</Typography>
+            <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>Preguntas frecuentes</Typography>
           </Box>
 
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6" gutterBottom sx={{ fontSize: '1rem' }}>
               Más información
             </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
+            <Typography variant="body2" sx={{ mb: 1, fontSize: '0.8rem' }}>
               Atendemos de lunes a sábado. ¿Tienes dudas? <br />
               ¡Escríbenos por WhatsApp o en nuestras redes sociales!
             </Typography>
-            <Box sx={{ maxWidth: 140 }}>
+            <Box sx={{ maxWidth: 120 }}>
               <Image
                 src="/webpayicon.webp"
                 alt="icono webpay"
                 width={120}
-                height={50}
+                height={45}
                 priority
                 style={{ width: '100%', height: 'auto' }}
               />
@@ -364,11 +431,20 @@ export default function Layout({ children }: MyComponentProps) {
 
         <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.5)' }} />
 
-        <Typography variant="caption" textAlign="end" sx={{ pb: 1 }}>
+        <Typography variant="caption" textAlign="center" sx={{ pb: 1, fontSize: '0.75rem' }}>
           © {new Date().getFullYear()} Chipe/Libros. Todos los derechos reservados.
         </Typography>
       </Box>
 
+      {/* DrawerCarrito colocado al final (fuera de cualquier Box clicable) */}
+      <DrawerCarrito
+        isOpen={drawerCarritoisOpen}
+        onClose={(event: {}, reason: 'backdropClick' | 'escapeKeyDown') => {
+          if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+            setdrawerCarritoisOpen(false);
+          }
+        }}
+      />
     </>
   );
 }
