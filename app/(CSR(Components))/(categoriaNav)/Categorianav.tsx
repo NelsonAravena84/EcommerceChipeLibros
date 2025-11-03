@@ -48,6 +48,7 @@ export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
       sx={{
         display: "flex",
         backgroundColor: "#322F2F",
+        width:"100%",
         color: "white",
         gap: 4,
         p: 6,

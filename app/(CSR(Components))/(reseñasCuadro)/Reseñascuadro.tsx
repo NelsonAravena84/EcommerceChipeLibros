@@ -5,7 +5,6 @@ import { Box, Typography, Rating, Card, CardContent, CardMedia } from "@mui/mate
 interface propsReseña {
   titulo: string
   descripcion: string
-  imagen: string
   fecha: string
   nombruser: string
   valoracion: number
@@ -14,7 +13,6 @@ interface propsReseña {
 export default function CuadroReseñas({
   titulo,
   descripcion,
-  imagen,
   fecha,
   nombruser,
   valoracion,
@@ -29,19 +27,7 @@ export default function CuadroReseñas({
         maxWidth: 500,
       }}
     >
-      {/* Imagen del libro */}
-      <CardMedia
-        component="img"
-        image={imagen}
-        alt={titulo}
-        sx={{
-          width: 80,
-          height: 110,
-          objectFit: "cover",
-          borderRadius: 1,
-          mr: 2,
-        }}
-      />
+   
 
       {/* Contenido */}
       <CardContent sx={{ flex: 1, p: 0 }}>
