@@ -1,7 +1,8 @@
-import { Box, Typography, Grid } from "@mui/material"
+import { Box, Typography, Grid } from "@mui/material";
+import Link from "next/link";
 
 interface PropsCategoriaNav {
-  isOpen: boolean,
+  isOpen: boolean;
 }
 
 export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
@@ -38,10 +39,9 @@ export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
       titulo: "CIENCIAS SOCIALES",
       items: ["Sociología", "Antropología", "Psicología", "Economía", "Ciencias Políticas", "Derecho"],
     },
-  ]
+  ];
 
-  // 👉 Si no está abierto, no se renderiza nada
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <Box
@@ -54,29 +54,34 @@ export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
         justifyContent: "center",
       }}
     >
-      {/* Contenedor general */}
       <Grid container spacing={4} sx={{ flex: 1, justifyContent: "center" }}>
         {/* Sección lateral izquierda */}
         <Grid item xs={12} sm={3} md={2}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Typography
-              variant="subtitle1"
-              sx={{ cursor: "pointer", borderRight: "1px solid white", pr: 2 }}
-            >
-              NOVEDADES
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{ cursor: "pointer", borderRight: "1px solid white", pr: 2 }}
-            >
-              MÁS VENDIDOS
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={{ cursor: "pointer", borderRight: "1px solid white", pr: 2 }}
-            >
-              OFERTAS
-            </Typography>
+            <Link href="/productos/novedades" passHref>
+              <Typography
+                variant="subtitle1"
+                sx={{ cursor: "pointer", borderRight: "1px solid white", pr: 2 }}
+              >
+                NOVEDADES
+              </Typography>
+            </Link>
+            <Link href="/productos/mas-vendidos" passHref>
+              <Typography
+                variant="subtitle1"
+                sx={{ cursor: "pointer", borderRight: "1px solid white", pr: 2 }}
+              >
+                MÁS VENDIDOS
+              </Typography>
+            </Link>
+            <Link href="/productos/ofertas" passHref>
+              <Typography
+                variant="subtitle1"
+                sx={{ cursor: "pointer", borderRight: "1px solid white", pr: 2 }}
+              >
+                OFERTAS
+              </Typography>
+            </Link>
           </Box>
         </Grid>
 
@@ -96,20 +101,21 @@ export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
               {cat.titulo}
             </Typography>
             {cat.items.map((item, i) => (
-              <Typography
-                key={i}
-                variant="body2"
-                sx={{
-                  color: "rgba(255,255,255,0.8)",
-                  "&:hover": { color: "#fff", cursor: "pointer" },
-                }}
-              >
-                {item}
-              </Typography>
+              <Link key={i} href={`/productos/categoria/${encodeURIComponent(item)}`} passHref>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "rgba(255,255,255,0.8)",
+                    "&:hover": { color: "#fff", cursor: "pointer" },
+                  }}
+                >
+                  {item}
+                </Typography>
+              </Link>
             ))}
           </Grid>
         ))}
       </Grid>
     </Box>
-  )
+  );
 }

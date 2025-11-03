@@ -13,3 +13,15 @@ export const obtenerProductos = async () => {
         throw error;
     }
 }
+
+export const obtenerProductosPorCategoria = async (categoriaId: number) => {
+  try {
+    const response = await api.get('/productos/por-categoria', {
+      params: { categoria: categoriaId }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener productos:', error);
+    throw error;
+  }
+}

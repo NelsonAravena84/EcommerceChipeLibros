@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardMedia, CardContent, Typography, Button, Box, Rating, Chip } from '@mui/material';
 import { CartPlus, Heart } from 'iconoir-react';
 import Link from 'next/link';
-import { obtenerProductos } from '@/app/api/productosApi';
+import { obtenerProductos, obtenerProductosPorCategoria } from '@/app/api/productosApi';
 import { useCart } from '@/app/context/CartContext';
 
 interface Producto {
@@ -12,32 +12,38 @@ interface Producto {
   nombre: string;
   precio: number;
   precio_final?: number;
-  categoria?: string;
+  categoria?: string;  // ahora sí contiene el nombre de la categoría
   image_url?: string;
   rating?: number;
 }
 
-function ProductCard() {
+interface ProductCardProps {
+  categoriaId?: number;
+}
+
+function ProductCard({ categoriaId }: ProductCardProps) {
+
   const [productos, setProductos] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { addToCart } = useCart(); // ✅ usamos el contexto del carrito
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    const fetchProductos = async () => {
-      try {
-        const data = await obtenerProductos();
-        setProductos(data);
-      } catch (err) {
-        setError('No se pudieron cargar los productos');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchProductos = async () => {
+    try {
+      const data = await obtenerProductosPorCategoria(categoriaId!);
+      setProductos(data);
+    } catch (err) {
+      setError('No se pudieron cargar los productos');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchProductos();
-  }, []);
+  fetchProductos();
+}, [categoriaId]);
+
 
   if (loading) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -75,15 +81,15 @@ function ProductCard() {
           {/* Contenido del producto */}
           <CardContent sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, padding: 2 }}>
             <Chip
-              label={producto.categoria || 'Categoría'}
+              label={producto.categoria || 'Sin categoría'}
               size="small"
               sx={{
                 mb: 0.5,
-                height: 20,
+                height: 25,
                 backgroundColor: 'black',
                 color: 'white',
                 fontWeight: 500,
-                fontSize: '0.675rem',
+                fontSize: '0.875rem',
               }}
             />
 
@@ -106,14 +112,14 @@ function ProductCard() {
                 variant="body2"
                 sx={{ ml: 0.5, fontSize: '0.7rem', color: '#64748B' }}
               >
-                ({producto.rating || 0}.0)
+                ({producto.rating?.toFixed(1) || '0.0'})
               </Typography>
             </Box>
 
             {/* Precio */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
               <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                ${producto.precio_final?.toLocaleString() || producto.precio.toLocaleString()}
+                ${(producto.precio_final ?? producto.precio).toLocaleString()}
               </Typography>
               {producto.precio_final && (
                 <Typography
@@ -125,14 +131,15 @@ function ProductCard() {
               )}
             </Box>
 
-            {/* ✅ Botón con addToCart */}
+            {/* Botón añadir al carrito */}
             <Button
               variant="contained"
               onClick={() =>
                 addToCart({
                   id: producto.id,
                   name: producto.nombre,
-                  price: producto.precio_final || producto.precio,
+                  price: producto.precio_final ?? producto.precio,
+                  quantity: 1
                 })
               }
               sx={{

@@ -79,8 +79,7 @@ export default function Home() {
           </Box>
 
           <Box sx={{ display: "flex", justifyContent: "center", gap: 8, mt: 9 }}>
-            <ProductCard />
-
+            <ProductCard categoriaId={7}/>
           </Box>
 
           <Box
