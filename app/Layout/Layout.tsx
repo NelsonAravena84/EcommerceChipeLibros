@@ -17,6 +17,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemButton,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
@@ -246,8 +247,7 @@ export default function Layout({ children }: MyComponentProps) {
                       <React.Fragment key={index}>
                         {item.label === 'CATEGORÍAS' ? (
                           <>
-                            <ListItem
-                              button
+                            <ListItemButton
                               onClick={() => setCategoriesDrawerOpen(o => !o)}
                               sx={{
                                 color: "white",
@@ -256,41 +256,53 @@ export default function Layout({ children }: MyComponentProps) {
                               }}
                             >
                               <ListItemText primary="CATEGORÍAS" />
-                            </ListItem>
+                            </ListItemButton>
                             {categoriesDrawerOpen && (
                               <Box sx={{ bgcolor: "#232324" }}>
                                 {categories.map((cat, i) => (
-                                  <ListItem
-                                    button
-                                    key={i}
-                                    component={Link}
-                                    href={cat.href}
-                                    sx={{
-                                      pl: 4,
-                                      color: "#f5f5f5",
-                                      fontSize: "1rem",
-                                      borderBottom: '1px solid #333'
-                                    }}
-                                  >
-                                    <ListItemText primary={cat.label} />
-                                  </ListItem>
+                                  <Link key={i} href={cat.href ?? "#"} passHref legacyBehavior>
+                                    <ListItemButton
+                                      component="a"
+                                      sx={{
+                                        pl: 4,
+                                        color: "#f5f5f5",
+                                        fontSize: "1rem",
+                                        borderBottom: '1px solid #333',
+                                        cursor: 'pointer',
+                                      }}
+                                    >
+                                      <ListItemText primary={cat.label} />
+                                    </ListItemButton>
+                                  </Link>
                                 ))}
                               </Box>
                             )}
                           </>
+                        ) : item.href ? (
+                          <Link href={item.href} passHref legacyBehavior>
+                            <ListItemButton
+                              component="a"
+                              sx={{
+                                color: "white",
+                                fontWeight: 'bold',
+                                borderBottom: '1px solid #444',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              <ListItemText primary={item.label} />
+                            </ListItemButton>
+                          </Link>
                         ) : (
-                          <ListItem
-                            button
-                            component={item.href ? Link : 'div'}
-                            href={item.href ?? undefined}
+                          <ListItemButton
                             sx={{
                               color: "white",
                               fontWeight: 'bold',
-                              borderBottom: '1px solid #444'
+                              borderBottom: '1px solid #444',
                             }}
+                            onClick={() => { }}
                           >
                             <ListItemText primary={item.label} />
-                          </ListItem>
+                          </ListItemButton>
                         )}
                       </React.Fragment>
                     ))}
@@ -443,12 +455,12 @@ export default function Layout({ children }: MyComponentProps) {
       {/* DrawerCarrito colocado al final (fuera de cualquier Box clicable) */}
       <DrawerCarrito
         isOpen={drawerCarritoisOpen}
-        onClose={(event: {}, reason: 'backdropClick' | 'escapeKeyDown') => {
-          if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
-            setdrawerCarritoisOpen(false);
-          }
+        onClose={(event) => {
+          // Opcional: puedes inspeccionar event si quieres
+          setdrawerCarritoisOpen(false);
         }}
       />
+
     </>
   );
 }
