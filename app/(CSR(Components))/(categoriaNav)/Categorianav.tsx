@@ -1,5 +1,8 @@
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid as MuiGrid } from "@mui/material";
 import Link from "next/link";
+import React from "react";
+
+const Grid = MuiGrid as unknown as React.FC<any>;
 
 interface PropsCategoriaNav {
   isOpen: boolean;
