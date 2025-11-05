@@ -17,6 +17,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0)
+      '@mui/icons-material':
+        specifier: ^7.3.4
+        version: 7.3.5(@mui/material@7.3.4(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react@19.2.0)(react@19.1.0)
       '@mui/material':
         specifier: ^7.3.4
         version: 7.3.4(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -26,6 +29,9 @@ importers:
       '@mui/x-data-grid':
         specifier: ^8.14.0
         version: 8.14.0(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@mui/material@7.3.4(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mui/system@7.3.3(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@react-oauth/google':
+        specifier: ^0.12.2
+        version: 0.12.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       axios:
         specifier: ^1.12.2
         version: 1.12.2
@@ -304,6 +310,17 @@ packages:
   '@mui/core-downloads-tracker@7.3.4':
     resolution: {integrity: sha512-BIktMapG3r4iXwIhYNpvk97ZfYWTreBBQTWjQKbNbzI64+ULHfYavQEX2w99aSWHS58DvXESWIgbD9adKcUOBw==}
 
+  '@mui/icons-material@7.3.5':
+    resolution: {integrity: sha512-LciL1GLMZ+VlzyHAALSVAR22t8IST4LCXmljcUSx2NOutgO2XnxdIp8ilFbeNf9wpo0iUFbAuoQcB7h+HHIf3A==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@mui/material': ^7.3.5
+      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
   '@mui/material-nextjs@7.3.3':
     resolution: {integrity: sha512-SHqEh/GIa/HkHzBMMGvTRCVSLvXYTATZ7QN7/QxngimW5kBDI+pWzjieS8HmLDgo36rxD8g+GcLY6Bu+pilciw==}
     engines: {node: '>=14.0.0'}
@@ -481,6 +498,12 @@ packages:
 
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+
+  '@react-oauth/google@0.12.2':
+    resolution: {integrity: sha512-d1GVm2uD4E44EJft2RbKtp8Z1fp/gK8Lb6KHgs3pHlM0PxCXGLaq8LLYQYENnN4xPWO1gkL4apBtlPKzpLvZwg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -1096,6 +1119,14 @@ snapshots:
 
   '@mui/core-downloads-tracker@7.3.4': {}
 
+  '@mui/icons-material@7.3.5(@mui/material@7.3.4(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react@19.2.0)(react@19.1.0)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@mui/material': 7.3.4(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+    optionalDependencies:
+      '@types/react': 19.2.0
+
   '@mui/material-nextjs@7.3.3(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.2.0)(react@19.1.0))(@types/react@19.2.0)(next@15.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -1249,6 +1280,11 @@ snapshots:
     optional: true
 
   '@popperjs/core@2.11.8': {}
+
+  '@react-oauth/google@0.12.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   '@swc/helpers@0.5.15':
     dependencies:
