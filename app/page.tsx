@@ -38,12 +38,22 @@ export default function Home() {
         {/* Categorías destacadas */}
         <Box sx={{ mt: 4, px: 2 }}>
           <Grid container justifyContent="space-between" alignItems="center" spacing={{ xs: 2, md: 0 }}>
-            <Grid component="div" xs={12} md="auto">
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                md: "auto"
+              }}>
               <Typography variant="h5" sx={{ color: 'black' }}>
                 Categorías destacadas
               </Typography>
             </Grid>
-            <Grid component="div" xs={12} md="auto">
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                md: "auto"
+              }}>
               <Box
                 sx={{
                   px: 4,
@@ -64,25 +74,49 @@ export default function Home() {
 
           {/* Card de categorías */}
           <Grid container spacing={2} sx={{ mt: 2 }} justifyContent="center" alignItems="center">
-            <Grid component="div" xs={12} sm={6} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3
+              }}>
               <CardImageDesc
                 imageURL={informacionGeneral.categorias.Imagen1}
                 Tittle={informacionGeneral.categorias.Descripcion1}
               />
             </Grid>
-            <Grid component="div" xs={12} sm={6} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3
+              }}>
               <CardImageDesc
                 imageURL={informacionGeneral.categorias.Imagen2}
                 Tittle={informacionGeneral.categorias.Descripcion2}
               />
             </Grid>
-            <Grid component="div" xs={12} sm={6} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3
+              }}>
               <CardImageDesc
                 imageURL={informacionGeneral.categorias.Imagen3}
                 Tittle={informacionGeneral.categorias.Descripcion3}
               />
             </Grid>
-            <Grid component="div" xs={12} sm={6} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3
+              }}>
               <CardImageDesc
                 imageURL={informacionGeneral.categorias.Imagen4}
                 Tittle={informacionGeneral.categorias.Descripcion4}
@@ -103,7 +137,14 @@ export default function Home() {
         {/* Productos destacados */}
         <Box sx={{ mt: 4, justifyContent: 'end' }}>
           <Grid container spacing={2} sx={{ justifyContent: { xl: 'end', xs: 'center' } }}>
-            <Grid component="div" xs={12} md={10} lg={8} xl={6}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                md: 10,
+                lg: 8,
+                xl: 6
+              }}>
               <ProductCard categoriaId={1} />
             </Grid>
           </Grid>
@@ -135,7 +176,12 @@ export default function Home() {
         {/* Cuadros de servicio */}
         <Box sx={{ display: 'grid', gap: 2, px: 2, my: 4 }}>
           <Grid container spacing={2} justifyContent="center" direction={{ xs: 'column', md: 'row' }}>
-            <Grid component="div" xs={12} sm={6}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 6
+              }}>
               <CuadroTexto
                 titulo={'Libros nuevos y usados'}
                 descripcion="En ChipeLibro encontrarás tanto libros nuevos como de segunda mano. Los ejemplares que no se venden son donados para seguir fomentando la lectura en distintas comunidades."
@@ -150,7 +196,12 @@ export default function Home() {
                 }
               />
             </Grid>
-            <Grid component="div" xs={12} sm={6}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 6
+              }}>
               <CuadroTexto
                 titulo={'Envíos a todo Chile'}
                 descripcion="Entregamos en Santiago y enviamos a todo Chile a través de Starken. También realizamos envíos internacionales mediante Correos de Chile."
@@ -174,7 +225,13 @@ export default function Home() {
             Reseñas Destacadas
           </Typography>
           <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 4, flexWrap: { xs: 'wrap', sm: 'nowrap' } }}>
-            <Grid component="div" xs={12} sm={4} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 4,
+                md: 3
+              }}>
               <CuadroReseñas
                 titulo="Compra fácil y atención impecable "
                 descripcion="Me encantó la experiencia de compra, rápida y segura. El libro llegó en perfecto estado y el soporte respondió todas mis dudas."
@@ -183,7 +240,13 @@ export default function Home() {
                 valoracion={4.2}
               />
             </Grid>
-            <Grid component="div" xs={12} sm={4} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 4,
+                md: 3
+              }}>
               <CuadroReseñas
                 titulo="Entregas rápidas y producto impecable"
                 descripcion="La calidad del libro superó mis expectativas y la entrega fue súper rápida, justo a tiempo para mi viaje. Una experiencia sin complicaciones."
@@ -192,7 +255,13 @@ export default function Home() {
                 valoracion={3.9}
               />
             </Grid>
-            <Grid component="div" xs={12} sm={4} md={3}>
+            <Grid
+              component="div"
+              size={{
+                xs: 12,
+                sm: 4,
+                md: 3
+              }}>
               <CuadroReseñas
                 titulo="Calidad impecable para un libro de segunda mano"
                 descripcion="Me sorprendió gratamente la condición del libro. Aunque es de segunda mano, llegó prácticamente como nuevo, sin daños visibles y con el olor característico que esperaba."
