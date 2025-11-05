@@ -306,7 +306,7 @@ export default function Layout({ children }: MyComponentProps) {
                 gap: 5,
                 p: 4,
                 color: '#fff',
-                fontWeight: 500,
+                fontWeight: 600,
                 flexWrap: 'wrap',
                 position: 'relative'
               }}
@@ -323,7 +323,7 @@ export default function Layout({ children }: MyComponentProps) {
                   <Box
                     sx={{
                       position: 'fixed',
-                      top: '120px',
+                      top: '202px',
                       left: 0,
                       width: '100vw',
                       zIndex: 1400,
@@ -333,7 +333,6 @@ export default function Layout({ children }: MyComponentProps) {
                       boxShadow: 3,
                       py: 4,
                     }}
-                    onMouseLeave={handleCategoriasClose}
                   >
                     <Box sx={{ width: '90vw', maxWidth: 1600 }}>
                       <MenuCategorias isOpen={true} />
