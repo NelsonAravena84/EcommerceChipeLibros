@@ -56,7 +56,7 @@ export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
     >
       <Grid container spacing={4} sx={{ flex: 1, justifyContent: "center" }}>
         {/* Sección lateral izquierda */}
-        <Grid item component="div" xs={12} sm={3} md={2}>
+        <Grid item xs={12} sm={3} md={2}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Link href="/productos/novedades" passHref>
               <Typography
@@ -87,7 +87,7 @@ export default function MenuCategorias({ isOpen }: PropsCategoriaNav) {
 
         {/* Secciones de categorías */}
         {categorias.map((cat, index) => (
-          <Grid item component="div" xs={12} sm={4} md={2} key={index}>
+          <Grid item xs={12} sm={4} md={2} key={index}>
             <Typography
               variant="subtitle1"
               sx={{
