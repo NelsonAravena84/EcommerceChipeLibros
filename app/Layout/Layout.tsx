@@ -221,14 +221,19 @@ export default function Layout({ children }: MyComponentProps) {
               <Drawer
                 anchor="right"
                 open={menuDrawerOpen}
-                onClose={toggleMenuDrawer(false)}
+                onClose={(event, reason) => {
+                  if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+                    setMenuDrawerOpen(false);
+                    setCategoriesDrawerOpen(false);
+                  }
+                }}
                 PaperProps={{
                   sx: {
                     width: '100vw',
                     maxWidth: '60vw',
-                    bgcolor: "#322F2F",
-                    color: "white"
-                  }
+                    bgcolor: '#322F2F',
+                    color: 'white',
+                  },
                 }}
               >
                 <Box
