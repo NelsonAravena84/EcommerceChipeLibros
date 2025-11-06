@@ -135,15 +135,15 @@ export default function Home() {
         </Box>
 
         {/* Productos destacados */}
-        <Box sx={{ mt: 4, justifyContent: 'end' }}>
-          <Grid container spacing={2} sx={{ justifyContent: { xl: 'end', xs: 'center' } }}>
+        <Box sx={{ mt: 4, justifyContent:'center'}}>
+          <Grid container spacing={2} sx={{ justifyContent: { xl: 'center', xs: 'center' } }}>
             <Grid
               component="div"
               size={{
                 xs: 12,
                 md: 10,
                 lg: 8,
-                xl: 6
+                xl: 2
               }}>
               <ProductCard categoriaId={1} />
             </Grid>
