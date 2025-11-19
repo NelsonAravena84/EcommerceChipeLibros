@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { useCart } from '@/app/context/CartContext';
 import { XmarkCircle, MinusCircle, PlusCircle } from 'iconoir-react';
+import Link from 'next/link';
 
 interface Props {
   isOpen: boolean;
@@ -165,19 +166,24 @@ export default function DrawerCarrito({ isOpen, onClose }: Props) {
                 .reduce((acc, item) => acc + item.price * item.quantity, 0)
                 .toLocaleString('es-CL')}
             </Typography>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                mt: 2,
-                color: 'white',
-                background: 'black',
-                '&:hover': { background: '#222' },
-              }}
-              onClick={() => alert('Proceder al pago')}
+          
+            <Link
+              href={`/resume-cart/`}
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              Continuar
-            </Button>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  mt: 2,
+                  color: 'white',
+                  background: 'black',
+                  '&:hover': { background: '#222' },
+                }}
+              >
+                Continuar
+              </Button>
+            </Link>
           </Box>
         )}
       </Box>

@@ -1,6 +1,12 @@
 'use client';
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect
+} from 'react';
 
 export interface Product {
   id: number;
@@ -22,16 +28,27 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>([]);
 
+  // 🔥 1. Cargar carrito desde localStorage cuando la app inicia
+  useEffect(() => {
+    const saved = localStorage.getItem("cart");
+    if (saved) {
+      setCart(JSON.parse(saved));
+    }
+  }, []);
+
+  // 🔥 2. Guardar carrito en localStorage cuando cambia
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (product: Product) => {
     setCart(prev => {
       const existing = prev.find(p => p.id === product.id);
       if (existing) {
-        // Si ya existe, incrementa cantidad
         return prev.map(p =>
           p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
         );
       }
-      // Si no existe, lo agrega con cantidad 1
       return [...prev, { ...product, quantity: 1 }];
     });
   };
@@ -58,7 +75,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, increaseQuantity, decreaseQuantity, removeFromCart }}
+      value={{
+        cart,
+        addToCart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeFromCart
+      }}
     >
       {children}
     </CartContext.Provider>

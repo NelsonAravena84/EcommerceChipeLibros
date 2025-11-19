@@ -4,8 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardMedia, CardContent, Typography, Button, Box, Rating, Chip } from '@mui/material';
 import { CartPlus, Heart } from 'iconoir-react';
 import Link from 'next/link';
-import { obtenerProductosPorCategoria } from '@/app/api/productosApi';
+import { obtenerProductosPorCategoria } from '@/lib/productosApi';
 import { useCart } from '@/app/context/CartContext';
+
+const createSlug = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w-]+/g, '');
+};
 
 interface Producto {
   id: number;
@@ -50,168 +58,173 @@ function ProductCard({ categoriaId }: ProductCardProps) {
       sx={{
         width: "100%",
         display: 'grid',
-        gap: { xs: 4, md: 5, lg: 7, xl: 12 },
+        gap: { xs: 2, md: 3, lg: 4 },
         gridTemplateColumns: {
           xs: '1fr',
           sm: '1fr 1fr',
-          md: 'repeat(3, 1fr)',
-          lg: 'repeat(4, 1fr)',
-          xl: 'repeat(5, 1fr)'
+          md: 'repeat(4, 1fr)'
         },
         justifyItems: "center",
         alignItems: "stretch",
-        px: { xs: 1, md: 0 },
-        py: { xs: 2, md: 3, lg: 5 }
+        px: 0,
+        py: 0
       }}
     >
-      {productos.map((producto) => (
-        <Card
-          key={producto.id}
-          sx={{
-            maxWidth: { xs: 260, sm: 260, md: 260, lg: 260 },
-            minWidth: { xs: 200, sm: 210, md: 210, lg: 210 },
-            width: '100%',
-            display: "flex",
-            flexDirection: "column",
-            position: "relative",
-            boxShadow: "0 4px 18px rgba(0,0,0,0.12)",
-            borderRadius: 4,
-            minHeight: { xs: 420, md: 470, lg: 520 },
-            transition: 'all 0.15s ease',
-            '&:hover': {
-              boxShadow: "0 8px 28px rgba(51,51,80,0.18)",
-              transform: "translateY(-5px) scale(1.03)"
-            },
-            bgcolor: "white"
-          }}
-        >
-          {/* Ícono de favorito */}
-          <Box sx={{ position: 'absolute', top: 12, left: 14, zIndex: 2 }}>
-            <Heart />
-          </Box>
+      {productos.map((producto) => {
+        const slug = createSlug(producto.nombre);
 
-          {/* Imagen del producto */}
-          <Box sx={{ position: "relative", overflow: "hidden" }}>
-            <CardMedia
-              component="img"
-              image={producto.image_url || 'https://via.placeholder.com/400x320'}
-              alt={producto.nombre || 'Producto'}
-              sx={{
-                height: { xs: 210, sm: 220, md: 270, lg: 290 },
-                width: "100%",
-                objectFit: 'cover',
-                borderTopLeftRadius: 16,
-                borderTopRightRadius: 16,
-                transition: 'transform 0.10s',
-                '&:hover': { transform: 'scale(1.04)' }
-              }}
-            />
-          </Box>
+        return (
+          <Card
+            key={producto.id}
+            sx={{
+              maxWidth: { xs: 190, sm: 200, md: 210 },
+              minWidth: { xs: 150, sm: 160, md: 170 },
 
-          {/* Contenido */}
-          <CardContent sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flexGrow: 1,
-            padding: 2,
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-          }}>
-            <Chip
-              label={producto.categoria || 'Sin categoría'}
-              size="small"
-              sx={{
-                mb: 0.5,
-                height: 25,
-                backgroundColor: 'black',
-                color: 'white',
-                fontWeight: 600,
-                fontSize: '0.94rem',
-                letterSpacing: '1px'
-              }}
-            />
-
-            <Link
-              href={`/producto/${producto.id}`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  lineHeight: 1.18,
-                  fontSize: { xs: '1rem', sm: '1.08rem', lg: '1.15rem', xl: '1.22rem' },
-                  mt: 2,
-                  mb: 1,
-                  color: "#0F172A"
-                }}
-              >
-                {producto.nombre || 'Producto'}
-              </Typography>
-            </Link>
-
-            {/* Rating */}
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5, mt: 0.5 }}>
-              <Rating value={producto.rating || 0} readOnly size="small" />
-              <Typography
-                variant="body2"
-                sx={{ ml: 0.5, fontSize: '0.8rem', color: '#64748B' }}
-              >
-                ({producto.rating?.toFixed(1) || '0.0'})
-              </Typography>
+              width: '100%',
+              display: "flex",
+              flexDirection: "column",
+              position: "relative",
+              boxShadow: "0 3px 12px rgba(0,0,0,0.1)",
+              borderRadius: 3,
+              minHeight: { xs: 340, md: 380 },
+              transition: 'all 0.15s ease',
+              '&:hover': {
+                boxShadow: "0 6px 18px rgba(51,51,80,0.15)",
+                transform: "translateY(-4px) scale(1.02)"
+              },
+              bgcolor: "white"
+            }}
+          >
+            {/* Ícono de favorito */}
+            <Box sx={{ position: 'absolute', top: 8, left: 10, zIndex: 2 }}>
+              <Heart width={18} height={18} />
             </Box>
 
-            {/* Precio */}
-            <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              mt: 1,
-              flexWrap: "wrap"
-            }}>
-              <Typography variant="h5" sx={{ fontWeight: 700, color: "#111827" }}>
-                ${(producto.precio_final ?? producto.precio).toLocaleString()}
-              </Typography>
-              {producto.precio_final && (
+            {/* Imagen */}
+            <Box sx={{ position: "relative", overflow: "hidden" }}>
+              <CardMedia
+                component="img"
+                image={producto.image_url || 'https://via.placeholder.com/400x320'}
+                alt={producto.nombre}
+                sx={{
+                  height: { xs: 150, sm: 160, md: 170 },
+                  width: "100%",
+                  objectFit: 'cover',
+                  borderTopLeftRadius: 12,
+                  borderTopRightRadius: 12,
+                  transition: 'transform 0.10s',
+                  '&:hover': { transform: 'scale(1.04)' }
+                }}
+              />
+            </Box>
+
+            <CardContent
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flexGrow: 1,
+                padding: 1.5,
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+              }}
+            >
+              <Chip
+                label={producto.categoria || 'Sin categoría'}
+                size="small"
+                sx={{
+                  mb: 0.5,
+                  height: 20,
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontWeight: 600,
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.5px'
+                }}
+              />
+
+              <Link
+                href={`/detalle-producto/${producto.id}/${slug}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    lineHeight: 1.15,
+                    fontSize: { xs: '0.85rem', sm: '0.9rem', md: '0.95rem' },
+                    mt: 1,
+                    mb: 0.5,
+                    color: "#0F172A"
+                  }}
+                >
+                  {producto.nombre}
+                </Typography>
+              </Link>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                <Rating value={producto.rating || 0} readOnly size="small" />
                 <Typography
                   variant="body2"
-                  sx={{ color: '#6B7280', textDecoration: 'line-through' }}
+                  sx={{ ml: 0.3, fontSize: '0.7rem', color: '#64748B' }}
                 >
-                  ${producto.precio.toLocaleString()}
+                  ({producto.rating?.toFixed(1) || '0.0'})
                 </Typography>
-              )}
-            </Box>
+              </Box>
 
-            {/* Botón añadir al carrito */}
-            <Button
-              variant="contained"
-              onClick={() =>
-                addToCart({
-                  id: producto.id,
-                  name: producto.nombre,
-                  price: producto.precio_final ?? producto.precio,
-                  quantity: 1
-                })
-              }
-              sx={{
-                backgroundColor: 'white',
-                width: '100%',
-                mt: 2.5,
-                fontWeight: 700,
-                fontSize: { xs: '0.9rem', md: '1.05rem' },
-                color: '#161A2B',
-                textTransform: 'none',
-                border: '1.5px solid #e2e8f0',
-                boxShadow: "0 2px 10px rgba(163,163,163,0.07)",
-                '&:hover': { backgroundColor: '#F3F4F6', color: '#111827' },
-              }}
-              endIcon={<CartPlus />}
-            >
-              Añadir al carrito
-            </Button>
-          </CardContent>
-        </Card>
-      ))}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  mt: 0.5,
+                  flexWrap: "wrap"
+                }}
+              >
+                <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1rem', color: "#111827" }}>
+                  ${(producto.precio_final ?? producto.precio).toLocaleString()}
+                </Typography>
+
+                {producto.precio_final && (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: '#6B7280', textDecoration: 'line-through', fontSize: '0.75rem' }}
+                  >
+                    ${producto.precio.toLocaleString()}
+                  </Typography>
+                )}
+              </Box>
+
+              <Button
+                variant="contained"
+                onClick={() =>
+                  addToCart({
+                    id: producto.id,
+                    name: producto.nombre,
+                    price: producto.precio_final ?? producto.precio,
+                    quantity: 1
+                  })
+                }
+                sx={{
+                  backgroundColor: 'white',
+                  width: '100%',
+                  mt: 1.5,
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  py: 0.5,
+                  color: '#161A2B',
+                  textTransform: 'none',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: "0 1px 5px rgba(163,163,163,0.06)",
+                  '&:hover': { backgroundColor: '#F3F4F6', color: '#111827' },
+                }}
+                endIcon={<CartPlus width={16} height={16} />}
+              >
+                Añadir al carrito
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      })}
     </Box>
   );
 }

@@ -135,18 +135,19 @@ export default function Home() {
         </Box>
 
         {/* Productos destacados */}
-        <Box sx={{ mt: 4, justifyContent:'center'}}>
-          <Grid container spacing={2} sx={{ justifyContent: { xl: 'center', xs: 'center' } }}>
-            <Grid
-              component="div"
-              size={{
-                xs: 12,
-                md: 10,
-                lg: 8,
-                xl: 2
-              }}>
-              <ProductCard categoriaId={1} />
-            </Grid>
+        <Box sx={{ mt: 4, justifyContent: 'center' }}>
+          <Grid
+            component="div"
+            size={{
+              xs: 12,
+              sm: 8,
+              md: 6,
+              lg: 4,
+              xl: 3
+            }}
+            sx={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <ProductCard categoriaId={37} />
           </Grid>
         </Box>
 
