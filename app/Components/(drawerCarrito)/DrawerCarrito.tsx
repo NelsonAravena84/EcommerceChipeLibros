@@ -38,7 +38,7 @@ export default function DrawerCarrito({ isOpen, onClose }: Props) {
     >
       <Box
         sx={{
-          width: 300,
+          width: 370,
           p: 2,
           display: 'flex',
           flexDirection: 'column',

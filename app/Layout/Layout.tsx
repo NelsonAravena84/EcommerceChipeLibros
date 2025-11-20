@@ -379,7 +379,6 @@ export default function Layout({ children }: MyComponentProps) {
         sx={{
           bgcolor: '#322F2F',
           color: 'white',
-          mt: 6,
           py: 2,
           px: { xs: 1, sm: 3, md: 6 },
           fontSize: { xs: '0.7rem', sm: '0.75rem', md: '0.8rem' },

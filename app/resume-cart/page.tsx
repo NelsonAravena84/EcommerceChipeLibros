@@ -18,6 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Image from "next/image";
 import Layout from "../Layout/Layout";
 import { useCart } from "../context/CartContext";
+import Link from "next/link";
 
 export default function ResumeCart() {
   const { cart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
@@ -141,9 +142,12 @@ export default function ResumeCart() {
             <Button variant="contained" sx={{ bgcolor: "#393939" }}>
               Seguir comprando
             </Button>
+
+            <Link href={`/checkout/`}>
             <Button variant="contained" sx={{ bgcolor: "black" }}>
               Comprar
             </Button>
+            </Link>
           </Box>
         )}
       </TableContainer>
