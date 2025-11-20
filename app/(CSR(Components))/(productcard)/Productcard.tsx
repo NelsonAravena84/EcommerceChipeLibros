@@ -58,7 +58,7 @@ function ProductCard({ categoriaId }: ProductCardProps) {
       sx={{
         width: "100%",
         display: 'grid',
-        gap: { xs: 2, md: 3, lg: 4 },
+        gap: { xs: 1, sm: 1.5, md: 2 }, 
         gridTemplateColumns: {
           xs: '1fr',
           sm: '1fr 1fr',
@@ -77,25 +77,29 @@ function ProductCard({ categoriaId }: ProductCardProps) {
           <Card
             key={producto.id}
             sx={{
-              maxWidth: { xs: 190, sm: 200, md: 210 },
-              minWidth: { xs: 150, sm: 160, md: 170 },
+              maxWidth: { xs: 165, sm: 190, md: 220, lg: 240 },
+              minWidth: { xs: 145, sm: 160, md: 180, lg: 200 },
 
               width: '100%',
               display: "flex",
               flexDirection: "column",
               position: "relative",
+
+              minHeight: { xs: 300, sm: 340, md: 370, lg: 400 },
+
               boxShadow: "0 3px 12px rgba(0,0,0,0.1)",
               borderRadius: 3,
-              minHeight: { xs: 340, md: 380 },
-              transition: 'all 0.15s ease',
+
+              transition: 'all 0.2s ease',
               '&:hover': {
                 boxShadow: "0 6px 18px rgba(51,51,80,0.15)",
-                transform: "translateY(-4px) scale(1.02)"
+                transform: "translateY(-4px) scale(1.03)"
               },
               bgcolor: "white"
             }}
           >
-            {/* Ícono de favorito */}
+
+            {/* Ícono favorito */}
             <Box sx={{ position: 'absolute', top: 8, left: 10, zIndex: 2 }}>
               <Heart width={18} height={18} />
             </Box>
@@ -104,16 +108,18 @@ function ProductCard({ categoriaId }: ProductCardProps) {
             <Box sx={{ position: "relative", overflow: "hidden" }}>
               <CardMedia
                 component="img"
-                image={producto.image_url || 'https://via.placeholder.com/400x320'}
+                image={producto.image_url || 'https://via.placeholder.com/400x600'}
                 alt={producto.nombre}
                 sx={{
-                  height: { xs: 150, sm: 160, md: 170 },
                   width: "100%",
-                  objectFit: 'cover',
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
-                  transition: 'transform 0.10s',
-                  '&:hover': { transform: 'scale(1.04)' }
+                  aspectRatio: "3 / 4",          // 👈 Proporción real de libro
+                  objectFit: "contain",          // 👈 NO corta la imagen
+                  backgroundColor: "#ffffff",    // 👈 Para que se vea como portada real
+                  padding: 1.5,                  // 👈 Deja borde alrededor
+                  borderRadius: 2,               // 👈 Bordes suaves estilo libro
+                  border: "1px solid #e5e7eb",   // 👈 Simula el filo de la portada
+                  transition: 'transform 0.12s',
+                  '&:hover': { transform: 'scale(1.02)' }
                 }}
               />
             </Box>
@@ -221,6 +227,7 @@ function ProductCard({ categoriaId }: ProductCardProps) {
               >
                 Añadir al carrito
               </Button>
+
             </CardContent>
           </Card>
         );

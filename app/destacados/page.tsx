@@ -4,7 +4,7 @@ import Layout from "../Layout/Layout";
 export default function Destacados() {
   return (
     <Layout>
-      <CatalogoLayout titulo="Destacados" productcardId={1} />
+      <CatalogoLayout titulo="Destacados" productcardId={2} />
     </Layout>
   );
 }

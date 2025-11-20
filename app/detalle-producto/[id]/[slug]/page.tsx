@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useCart } from "@/app/context/CartContext";
 import { obtenerProductoPorID } from "@/lib/productosApi";
@@ -16,9 +16,11 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import ProductCard from "@/app/(CSR(Components))/(productcard)/Productcard";
+import { useParams } from 'next/navigation'; // 👈 Importar hook
 
-export default function DetailsPage({ params }: { params: { id: string } }) {
-  const productId = Number(params.id);
+export default function DetailsPage() {
+  const params = useParams(); // 👈 Usar hook
+  const productId = Number(params.id); // ahora ya se puede acceder
 
   const { addToCart } = useCart();
 
